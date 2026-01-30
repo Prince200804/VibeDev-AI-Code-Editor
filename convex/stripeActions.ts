@@ -36,8 +36,8 @@ export const createCheckoutSession = action({
             quantity: 1,
           },
         ],
-        success_url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/pricing?success=true&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/pricing?canceled=true`,
+        success_url: `https://vibedev-ai-code-editor.vercel.app/pricing?success=true&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://vibedev-ai-code-editor.vercel.app/pricing?canceled=true`,
         metadata: {
           userId: args.userId,
           email: args.email,
