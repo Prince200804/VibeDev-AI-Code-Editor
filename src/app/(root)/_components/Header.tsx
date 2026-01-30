@@ -10,7 +10,12 @@ import RunButton from "./RunButton";
 import HeaderProfileBtn from "./HeaderProfileBtn";
 
 async function Header() {
-  const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+  const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
+  if (!convexUrl) {
+    throw new Error("NEXT_PUBLIC_CONVEX_URL is not set. Please check your environment variables.");
+  }
+  
+  const convex = new ConvexHttpClient(convexUrl);
   const user = await currentUser();
 
   const convexUser = user
