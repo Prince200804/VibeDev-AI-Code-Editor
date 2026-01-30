@@ -13,10 +13,13 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as aiAssistant from "../aiAssistant.js";
 import type * as codeExecutions from "../codeExecutions.js";
 import type * as http from "../http.js";
 import type * as lemonSqueezy from "../lemonSqueezy.js";
 import type * as snippets from "../snippets.js";
+import type * as stripe from "../stripe.js";
+import type * as stripeActions from "../stripeActions.js";
 import type * as users from "../users.js";
 
 /**
@@ -28,10 +31,13 @@ import type * as users from "../users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  aiAssistant: typeof aiAssistant;
   codeExecutions: typeof codeExecutions;
   http: typeof http;
   lemonSqueezy: typeof lemonSqueezy;
   snippets: typeof snippets;
+  stripe: typeof stripe;
+  stripeActions: typeof stripeActions;
   users: typeof users;
 }>;
 export declare const api: FilterApi<

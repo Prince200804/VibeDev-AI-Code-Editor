@@ -10,6 +10,7 @@ import FeatureItem from "./_components/FeatureItem";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import UpgradeButton from "./_components/UpgradeButton";
 import LoginButton from "@/components/LoginButton";
+import PaymentSuccess from "./_components/PaymentSuccess";
 
 async function PricingPage() {
   const user = await currentUser();
@@ -25,6 +26,7 @@ async function PricingPage() {
       className="relative min-h-screen bg-[#0a0a0f] selection:bg-blue-500/20
      selection:text-blue-200"
     >
+      <PaymentSuccess />
       <NavigationHeader />
 
       {/* main content */}
@@ -92,13 +94,13 @@ async function PricingPage() {
                   </div>
                   <h2 className="text-3xl font-semibold text-white mb-4">Lifetime Pro Access</h2>
                   <div className="flex items-baseline justify-center gap-2 mb-4">
-                    <span className="text-2xl text-gray-400">$</span>
+                    <span className="text-2xl text-gray-400">Rs</span>
                     <span className="text-6xl font-semibold bg-gradient-to-r from-gray-100 to-gray-300 text-transparent bg-clip-text">
-                      39
+                      999
                     </span>
                     <span className="text-xl text-gray-400">one-time</span>
                   </div>
-                  <p className="text-gray-400 text-lg">Unlock the full potential of CodeCraft</p>
+                  <p className="text-gray-400 text-lg">Unlock the full potential of VibeDev</p>
                 </div>
 
                 {/* Features grid */}

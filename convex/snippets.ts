@@ -108,13 +108,25 @@ export const addComment = mutation({
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) throw new Error("Not authenticated");
 
-    const user = await ctx.db
+    let user = await ctx.db
       .query("users")
       .withIndex("by_user_id")
       .filter((q) => q.eq(q.field("userId"), identity.subject))
       .first();
 
-    if (!user) throw new Error("User not found");
+    // Create user if they don't exist
+    if (!user) {
+      const userId = await ctx.db.insert("users", {
+        userId: identity.subject,
+        email: identity.email || "no-email@example.com",
+        name: identity.name || identity.email?.split("@")[0] || "User",
+        isPro: false,
+      });
+      
+      user = await ctx.db.get(userId);
+    }
+
+    if (!user) throw new Error("Failed to create or find user");
 
     return await ctx.db.insert("snippetComments", {
       snippetId: args.snippetId,

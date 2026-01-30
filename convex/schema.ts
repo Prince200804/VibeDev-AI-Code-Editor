@@ -8,8 +8,8 @@ export default defineSchema({
     name: v.string(),
     isPro: v.boolean(),
     proSince: v.optional(v.number()),
-    lemonSqueezyCustomerId: v.optional(v.string()),
-    lemonSqueezyOrderId: v.optional(v.string()),
+    stripeCustomerId: v.optional(v.string()),
+    stripeSubscriptionId: v.optional(v.string()),
   }).index("by_user_id", ["userId"]),
 
   codeExecutions: defineTable({

@@ -5,16 +5,25 @@ import { defineMonacoThemes, LANGUAGE_CONFIG } from "../_constants";
 import { Editor } from "@monaco-editor/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { RotateCcwIcon, ShareIcon, TypeIcon } from "lucide-react";
-import { useClerk } from "@clerk/nextjs";
+import { RotateCcwIcon, ShareIcon, TypeIcon, Sparkles } from "lucide-react";
+import { useClerk, useUser } from "@clerk/nextjs";
 import { EditorPanelSkeleton } from "./EditorPanelSkeleton";
 import useMounted from "@/hooks/useMounted";
 import ShareSnippetDialog from "./ShareSnippetDialog";
+import AIAssistantDialog from "./AIAssistantDialog";
+import { useQuery } from "convex/react";
+import { api } from "../../../../convex/_generated/api";
 
-function EditorPanel() {
+export default function EditorPanel() {
   const clerk = useClerk();
+  const { user } = useUser();
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const [isAIDialogOpen, setIsAIDialogOpen] = useState(false);
   const { language, theme, fontSize, editor, setFontSize, setEditor } = useCodeEditorStore();
+  
+  const convexUser = useQuery(api.users.getUser, 
+    user?.id ? { userId: user.id } : "skip"
+  );
 
   const mounted = useMounted();
 
@@ -90,6 +99,20 @@ function EditorPanel() {
               <RotateCcwIcon className="size-4 text-gray-400" />
             </motion.button>
 
+            {/* AI Assistant Button - Pro Only */}
+            {convexUser?.isPro && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setIsAIDialogOpen(true)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg overflow-hidden bg-gradient-to-r
+                 from-purple-500 to-blue-500 opacity-90 hover:opacity-100 transition-opacity"
+              >
+                <Sparkles className="size-4 text-white" />
+                <span className="text-sm font-medium text-white">AI Help</span>
+              </motion.button>
+            )}
+
             {/* Share Button */}
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -142,7 +165,13 @@ function EditorPanel() {
         </div>
       </div>
       {isShareDialogOpen && <ShareSnippetDialog onClose={() => setIsShareDialogOpen(false)} />}
+      {isAIDialogOpen && (
+        <AIAssistantDialog
+          onClose={() => setIsAIDialogOpen(false)}
+          currentCode={editor?.getValue() || ""}
+          language={language}
+        />
+      )}
     </div>
   );
 }
-export default EditorPanel;

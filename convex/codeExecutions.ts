@@ -12,7 +12,16 @@ export const saveExecution = mutation({
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new ConvexError("Not authenticated");
+    
+    console.log("🔐 Authentication check:", {
+      hasIdentity: !!identity,
+      subject: identity?.subject,
+      issuer: identity?.issuer,
+    });
+    
+    if (!identity) {
+      throw new ConvexError("Not authenticated. Please sign out and sign in again to refresh your session.");
+    }
 
     // check pro status
     const user = await ctx.db

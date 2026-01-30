@@ -1,5 +1,5 @@
 {
-  "name": "code-craft",
+  "name": "vibedev",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.6.0",
+    "@google/generative-ai": "^0.24.1",
     "@monaco-editor/react": "^4.6.0",
     "convex": "^1.17.3",
     "framer-motion": "^11.13.1",
@@ -19,6 +20,7 @@
     "react-dom": "19.0.0-rc-66855b96-20241106",
     "react-hot-toast": "^2.4.1",
     "react-syntax-highlighter": "^15.6.1",
+    "stripe": "^20.2.0",
     "svix": "^1.42.0",
     "zustand": "^5.0.1"
   },
